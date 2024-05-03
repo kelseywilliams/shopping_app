@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  shop_customer:
+    build: ./customer
+
+    networks:
+      - site
+
+    ports:
+      - "8001:8001"
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://shop_customer:8001"]
+      interval: 10s
+      timeout: 250ms
+
+  shop_proudcts:
+    build: ./proudcts
+
+    networks:
+      - site
+
+    ports:
+      - "8002:8002"
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://shop_products:8002"]
+  
+  shop_shopping:
+    build: ./shopping
+
+    networks:
+      - site
+
+    ports:
+      - "8003:8003"
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://shop_shopping:8002"]
+      interval: 10s
+      timeout: 250ms
+  
+
+networks:
+  site:
+    external: true
