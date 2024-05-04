@@ -1,6 +1,6 @@
-FROM node
+FROM node:latest
 
-WORKDIR /usr/src/
+WORKDIR /usr/src
 
 COPY package*.json ./
 
