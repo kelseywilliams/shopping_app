@@ -1,6 +1,20 @@
 version: "3.8"
 
 services:
+  shop_gateway:
+    build: ./gateway
+
+    networks:
+      - site
+
+    ports:
+      - "8000:8000"
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://shop_gateway:8002"]
+      interval: 10s
+      timeout: 250ms
+
   shop_customer:
     build: ./customer
 
@@ -15,8 +29,8 @@ services:
       interval: 10s
       timeout: 250ms
 
-  shop_proudcts:
-    build: ./proudcts
+  shop_products:
+    build: ./products
 
     networks:
       - site
@@ -37,9 +51,10 @@ services:
       - "8003:8003"
 
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://shop_shopping:8002"]
+      test: ["CMD", "curl", "-f", "http://shop_shopping:8000"]
       interval: 10s
       timeout: 250ms
+
   
 
 networks:
